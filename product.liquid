@@ -1,0 +1,131 @@
+<section class="product-page">
+  <div class="container">
+    <div class="product-page-inner">
+      <div class="product-gallery">
+        <div class="product-gallery-main">
+          {%- if product.featured_image != blank -%}
+            <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}">
+          {%- endif -%}
+        </div>
+        
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery-thumbs">
+            {%- for image in product.images -%}
+              <div class="product-gallery-thumb {% if forloop.first %}active{% endif %}">
+                <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | escape | default: product.title }}">
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="product-info">
+        {%- if product.vendor != blank -%}
+          <p class="product-info-vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+        
+        <h1 class="product-info-title">{{ product.title }}</h1>
+        
+        <div class="product-info-price">
+          <span class="product-info-price-current">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product-info-price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+        
+        <div class="product-info-description">
+          {{ product.description }}
+        </div>
+        
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          {%- unless product.has_only_default_variant -%}
+            <div class="product-options">
+              {%- for option in product.options_with_values -%}
+                <div class="product-option">
+                  <p class="product-option-label">{{ option.name }}</p>
+                  <div class="product-option-values">
+                    {%- for value in option.values -%}
+                      <button type="button" class="product-option-btn {% if forloop.first %}selected{% endif %}" data-value="{{ value }}">
+                        {{ value }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+          
+          <select name="id" style="display: none;">
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}" data-options="{{ variant.options | join: ' / ' }}">
+                {{ variant.title }} - {{ variant.price | money }}
+              </option>
+            {%- endfor -%}
+          </select>
+          
+          <div class="product-quantity">
+            <span class="product-quantity-label">Quantity</span>
+            <div class="product-quantity-controls">
+              <button type="button" class="product-quantity-btn" data-action="minus">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+              <span class="product-quantity-value">1</span>
+              <button type="button" class="product-quantity-btn" data-action="plus">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          <input type="hidden" name="quantity" value="1">
+          
+          <button type="submit" class="btn btn-gold product-add-btn" {% unless product.available %}disabled{% endunless %}>
+            {%- if product.available -%}
+              Add to Cart
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+        </form>
+        
+        <a href="/checkout" class="btn btn-maroon product-buy-btn">Buy Now</a>
+        
+        <div class="product-features">
+          <div class="product-feature">
+            <svg class="product-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span class="product-feature-text">Free Shipping</span>
+          </div>
+          <div class="product-feature">
+            <svg class="product-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span class="product-feature-text">Secure Payment</span>
+          </div>
+          <div class="product-feature">
+            <svg class="product-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span class="product-feature-text">Easy Returns</span>
+          </div>
+          <div class="product-feature">
+            <svg class="product-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+            <span class="product-feature-text">100% Authentic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

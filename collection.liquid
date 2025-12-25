@@ -1,0 +1,46 @@
+<section class="collection-hero">
+  <div class="container">
+    <h1 class="collection-hero-title">{{ collection.title }}</h1>
+    <p class="collection-hero-count">{{ collection.products_count }} Products</p>
+  </div>
+</section>
+
+<section class="collection-filters">
+  <div class="container">
+    <div class="collection-filters-inner">
+      <div class="collection-filter-group">
+        <button class="filter-btn active">All</button>
+        {%- for tag in collection.all_tags -%}
+          <button class="filter-btn">{{ tag }}</button>
+        {%- endfor -%}
+      </div>
+      
+      <select class="sort-select" onchange="window.location.href = this.value;">
+        <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
+        <option value="{{ collection.url }}?sort_by=price-ascending">Price: Low to High</option>
+        <option value="{{ collection.url }}?sort_by=price-descending">Price: High to Low</option>
+        <option value="{{ collection.url }}?sort_by=created-descending">Newest First</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {%- paginate collection.products by 12 -%}
+    <div class="product-grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p>No products found in this collection.</p>
+      {%- endfor -%}
+    </div>
+    
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination text-center mt-4">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>

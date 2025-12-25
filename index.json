@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-carousel",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "badge": "Premium Collection",
+            "heading": "Discover Authentic <span>Indian Fragrances</span>",
+            "text": "Experience the essence of tradition with our handcrafted attars and perfumes, made using centuries-old techniques.",
+            "button_label": "Shop Collection",
+            "button_link": "/collections/all",
+            "button_label_2": "Learn More",
+            "button_link_2": "/pages/about"
+          }
+        }
+      },
+      "block_order": ["slide-1"]
+    },
+    "trust": {
+      "type": "trust-strip",
+      "blocks": {
+        "trust-1": { "type": "trust_item", "settings": { "icon": "shipping", "title": "Free Shipping", "text": "On orders over ₹999" } },
+        "trust-2": { "type": "trust_item", "settings": { "icon": "quality", "title": "Premium Quality", "text": "100% authentic" } },
+        "trust-3": { "type": "trust_item", "settings": { "icon": "support", "title": "24/7 Support", "text": "Always here" } },
+        "trust-4": { "type": "trust_item", "settings": { "icon": "authentic", "title": "Certified", "text": "Genuine products" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"]
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {
+        "badge": "Shop by Category",
+        "heading": "Our <span>Collections</span>"
+      },
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "title": "Attars" } },
+        "cat-2": { "type": "category", "settings": { "title": "Perfumes" } },
+        "cat-3": { "type": "category", "settings": { "title": "Topis" } },
+        "cat-4": { "type": "category", "settings": { "title": "Burkhas" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"]
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "badge": "Featured Collection",
+        "heading": "Bestselling <span>Products</span>",
+        "products_to_show": 8,
+        "show_view_all": true
+      }
+    }
+  },
+  "order": ["hero", "trust", "categories", "featured"]
+}

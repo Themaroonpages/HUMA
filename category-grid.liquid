@@ -1,0 +1,104 @@
+<section class="section category-section">
+  <div class="container">
+    <div class="section-header">
+      {%- if section.settings.badge != blank -%}
+        <span class="section-badge">{{ section.settings.badge }}</span>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-description">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+    
+    <div class="category-grid">
+      {%- for block in section.blocks -%}
+        <div class="category-card">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}">
+          {%- else -%}
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #D4AF37, #E5C76B);"></div>
+          {%- endif -%}
+          
+          <div class="category-card-overlay">
+            <h3 class="category-card-title">{{ block.settings.title }}</h3>
+            {%- if block.settings.collection != blank -%}
+              <span class="category-card-count">{{ block.settings.collection.products_count }} Products</span>
+            {%- endif -%}
+          </div>
+          
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="category-card-link" aria-label="{{ block.settings.title }}"></a>
+          {%- elsif block.settings.collection != blank -%}
+            <a href="{{ block.settings.collection.url }}" class="category-card-link" aria-label="{{ block.settings.title }}"></a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge Text",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our <span>Collections</span>"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Attars" } },
+        { "type": "category", "settings": { "title": "Perfumes" } },
+        { "type": "category", "settings": { "title": "Topis" } },
+        { "type": "category", "settings": { "title": "Burkhas" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

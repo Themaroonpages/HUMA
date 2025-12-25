@@ -1,0 +1,91 @@
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      {%- if section.settings.badge != blank -%}
+        <span class="section-badge">{{ section.settings.badge }}</span>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-description">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+    
+    <div class="product-grid">
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="product-card">
+            <div class="product-card-image">
+              <div style="width: 100%; height: 100%; background: #f0f0f0; aspect-ratio: 1;"></div>
+            </div>
+            <div class="product-card-content">
+              <p class="product-card-category">Category</p>
+              <h3 class="product-card-title">Sample Product {{ i }}</h3>
+              <div class="product-card-price">
+                <span class="product-price-current">₹999</span>
+              </div>
+              <button class="btn btn-gold product-card-button">Add to Cart</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+    
+    {%- if section.settings.show_view_all -%}
+      <div class="text-center mt-4">
+        <a href="{{ section.settings.collection.url }}" class="btn btn-outline">View All Products</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge Text",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bestselling <span>Products</span>"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}
